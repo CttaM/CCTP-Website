@@ -1,0 +1,98 @@
+@font-face {
+    font-family: Batman;
+    src: url(batmfa__.ttf);
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#bottom-wrapper{
+    flex: 1;
+}
+    
+footer{
+    position: sticky;
+    bottom: 0;
+}
+
+.event-pic{
+    width: 100%;
+    max-width:100%;
+    height: auto;
+}
+
+.nav-text{
+    color: aliceblue;
+}
+
+.nav-title{
+    font-family: Batman;
+}
+
+/*https://www.dafont.com/batman-forever.font?text=Motive+Mates */
+
+.event-name{
+    text-decoration: none;
+    color: black;
+}
+
+.event-thumbnail {
+    transition: all ease 50ms;
+}
+
+.event-thumbnail:hover{
+    transform: scale(95%);
+    transition: all ease 50ms;
+    
+}
+
+@media (min-width: 425px){
+    #hiddenText{
+        display: none;
+    }
+}
+
+@media (min-width: 768px) { 
+    .nav-text {
+        font-size: medium;
+    }
+    .nav-title{
+        font-size: xx-large;
+    }
+    #myBtn{
+        display: none;
+    }
+    #dots{
+        display: none;
+    }
+    #hiddenText{
+        display: inline;
+    }
+ }
+
+#Buy-Ticket-Button{
+    background-color: #4C8787;
+    text-align: center;
+}
+
+#Event-detail-text{
+    font-size: small;
+}
+
+#ticket-selecetion{
+    display: inline;
+}
+
+.buy-ticket-button{
+    background: none;
+    border: none;
+    width: 100%;
+}
+
+#completePurchaseButton{
+    background-color: #4C8787;
+    color: antiquewhite;
+}
