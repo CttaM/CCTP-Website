@@ -42,6 +42,14 @@ function subtraction3(){
   document.getElementById("thirdReleaseTickets").stepDown();
 }
 
+function updateProgressBar(){
+  let progress = 50;
+  document.getElementById("progressBar").style=progress;
+  console.log("updateProgressBar");
+}
+  
+
+
 // function ticketSelectionPopUp(){
 //     var x = document.getElementById("ticket-selecetion");
 //     if (x.style.display === "none") {

@@ -48,7 +48,7 @@
                         <p class="text-center">First Release Tckets: <strong>£10.00</strong></p>
                         <div class="justify-content-center">
                         <label for="firstReleaseTickets" class="col-form-label">Quantity:</label>
-                        <input type="number" class="form-control text-center" id="firstReleaseTickets" min="0" style="width: 25%; display: inline">
+                        <input type="number" class="form-control text-center" name="firstReleaseTickets" id="firstReleaseTickets" min="0" style="width: 25%; display: inline">
                         <button onclick="addition()" class="justify-content-center" type="button" id="addButton" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
                         <button onclick="subtraction()" class="justify-content-center" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
                         </div>
@@ -57,14 +57,14 @@
                     <div class="mb-3">
                         <p class="text-center">Second Release Tickets: <strong>£12.50</strong></p>
                         <label for="secondReleaseTickets" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" id="secondReleaseTickets" min="0" style="width: 25%; display: inline">
+                        <input type="number" class="form-control" name="secondReleaseTickets" id="secondReleaseTickets" min="0" style="width: 25%; display: inline">
                         <button onclick="addition2()" type="button" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
                         <button onclick="subtraction2()" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
                     </div>
                     <div class="mb-3">
                         <p class="text-center">Final Release Tickets: <strong>£15</strong></p>
                         <label for="thirdReleaseTickets" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" id="thirdReleaseTickets" min="0" style="width: 25%; display: inline">
+                        <input type="number" class="form-control" name="thirdReleaseTickets" id="thirdReleaseTickets" min="0" style="width: 25%; display: inline">
                         <button onclick="addition3()" type="button" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
                         <button onclick="subtraction3()" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
                     </div>
@@ -77,15 +77,15 @@
                 <div class="col-sm-4 col-lg-4">
                 
                         <label for="NameOnCard">Name on card</label>
-                        <input type="text" id="NameOnCard">
+                        <input type="text" name="NameOnCard">
                         <label for="CardNumber">Card number</label>
-                        <input type="text" id="CardNumber">
+                        <input type="text" name="CardNumber">
                         <label for="CardExpiry">Card expiry date</label>
-                        <input type="text" id="CardExpiry" placeholder="MM/YY" style="width: 75%; text-align: center;">
+                        <input type="text" name="CardExpiry" placeholder="MM/YY" style="width: 75%; text-align: center;">
                         <label for="CardSecurityCode">Security Code</label>
-                        <input type="number" id="CardSecurityCode" placeholder="CVV" style="width: 75%; text-align: center;">
+                        <input type="number" name="CardSecurityCode" placeholder="CVV" style="width: 75%; text-align: center;">
                         <label for="PostCode">Post code</label>
-                        <input type="text" id="PostCode" style="width: 75%; text-align: center;"><br>
+                        <input type="text" name="PostCode" style="width: 75%; text-align: center;"><br>
                         <button type="submit" value="Submit" id="completePurchaseButton">Complete payment</button>
                         </div>
             

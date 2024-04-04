@@ -1,18 +1,22 @@
 <?php
 
 // Check if form data is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) 
+{
     // Get form data
     $firstRelease = $_POST["firstReleaseTickets"];
     $secondRelease = $_POST["secondReleaseTickets"];
     $thirdRelease = $_POST["thirdReleaseTickets"];
     $name = $_POST['NameOnCard'];
-    
+    print_r("code running");
+     // Write form data to the CSV file
+    $data = array($firstRelease, $secondRelease, $thirdRelease, $name);
+    print_r($data);
     // Open or create the CSV file
-    $file = fopen("purchases.csv", "a");
+    $file = fopen('purchases.csv', 'a');
 
-    // Write form data to the CSV file
-    fputcsv($file, array($name, $email));
+    fputcsv($file, $data);
+    //$result = fputcsv($file, $data);
 
     // Close the file
     fclose($file);
