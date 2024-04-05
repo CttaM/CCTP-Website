@@ -44,7 +44,7 @@
                 <div class="col-sm-4 col-lg-4"></div>
                 <div class="col-sm-4 col-lg-4 form-box" id="form-box">
                     <h1>Log In</h1>
-                    <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="input-group">
                             <div class="input-field">
                                 <input type="text" placeholder="Name" name="userName">
@@ -57,10 +57,14 @@
                             <div class="input-field">
                                 <input type="password" placeholder="Password" name="password1">
                             </div>
+                            <div class="input-field">
+                              <label for="password2">Please re-enter password</label>
+                                <input type="password" placeholder="Password" id="password2" name="password2">
+                            </div>
                         </div>
-                        <button type="submit" value="submit">Login</button>
+                        <button type="submit" value="submit">Register</button>
                     </form>
-                    <p>Don't have an account? Create one <a href="register.php">here</a></p>
+                    <p>Already have an account? Login in <a href="#">here</a></p>
                 </div>
                 <div class="col-sm-4 col-lg-4"></div>
             </div>
@@ -69,14 +73,15 @@
 
     <?php 
       
-      if ($_SERVER['REQUEST_METHOD'] == 'GET')
+      if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-        $userName = $_GET['userName'];
+        $userName = $_POST['userName'];
         $email = $_POST['userEmail'];
         $password1 = $_POST['password1'];
+        $password2 = $_POST['password2'];
         $password;
         $header = ['User name', 'Email', 'Password'];
-        $file = fopen('usersDataBase.csv', 'r');
+        $file = fopen('usersDataBase.csv', 'a');
 
         if($password1 == $password2){
           $password = $password1;
