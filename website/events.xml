@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<events>
+  <Event>
+    <Event_name>Event name</Event_name>
+    <Date>Date</Date>
+    <Location>Location</Location>
+    <Tickets/>
+    <Tags>Tickets sold</Tags>
+  </Event>
+  <Event>
+    <Event_name>K Motionz</Event_name>
+    <Date>2024-06-01</Date>
+    <Location>Lakota,6 Upper York St,BS2 8QN</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Jump Up</Tags>
+  </Event>
+  <Event>
+    <Event_name>Sub Focus</Event_name>
+    <Date>2024-07-13</Date>
+    <Location>Motion Bristol,74-76 Avon Street,BS2 0PX</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB, Dancefloor</Tags>
+  </Event>
+  <Event>
+    <Event_name>Love Saves The Day</Event_name>
+    <Date>2024-05-25, 2024-05-26</Date>
+    <Location>Ashton Court Estate,Long Aston,BS41 9JN</Location>
+    <Tickets>0/1000</Tickets>
+    <Tags>Festival,DnB,Dubstep,House,Techno</Tags>
+  </Event>
+  <Event>
+    <Event_name>Boomtown</Event_name>
+    <Date>2024-08-07, 2024-08,11</Date>
+    <Location>Matterley Estate,Alresford,SO24 0HY</Location>
+    <Tickets>0/1000</Tickets>
+    <Tags>Festival,DnB,Dubstep,House,Techno</Tags>
+  </Event>
+  <Event>
+    <Event_name>Forwards</Event_name>
+    <Date>2024-08-31, 2024-09-01</Date>
+    <Location>The Downs, Bristol, BS9 1FG</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>RnB,House,Trance</Tags>
+  </Event>
+  <Event>
+    <Event_name>Tokyo World</Event_name>
+    <Date>2024-09-21, 2024-09-22</Date>
+    <Location>Eastville Park, Fishponds, BS5 6XA</Location>
+    <Tickets>0/1000</Tickets>
+    <Tags>Festival,DnB,Dubstep,House,Techno</Tags>
+  </Event>
+  <Event>
+    <Event_name>Wide Eyes - A.M.C</Event_name>
+    <Date>2024-06-08</Date>
+    <Location>Lakota,6 Upper York St, BS2 8QN</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Jump Up</Tags>
+  </Event>
+  <Event>
+    <Event_name>Wide Eyes - Dimension</Event_name>
+    <Date>2024-06-15</Date>
+    <Location>Lakota,6 Upper York St, BS2 8QN</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Dancefloor</Tags>
+  </Event>
+  <Event>
+    <Event_name>Wide Eyes - DJ Hazard</Event_name>
+    <Date>2024-06-22</Date>
+    <Location>Lakota,6 Upper York St, BS2 8QN</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Jump Up</Tags>
+  </Event>
+  <Event>
+    <Event_name>The Blast - My Nu Leng</Event_name>
+    <Date>2024-06-29</Date>
+    <Location>Motion Bristol,74-76 Avon Street,BS2 0PX</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>Techno,Trance</Tags>
+  </Event>
+  <Event>
+    <Event_name>Lost Track Of Time - Simone</Event_name>
+    <Date>2024-07-13</Date>
+    <Location>Thekla,The Grove, BS1 4RB</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>Techno,Trance</Tags>
+  </Event>
+  <Event>
+    <Event_name>The Blast - Chase &amp; Status</Event_name>
+    <Date>2024-07-20</Date>
+    <Location>Motion Bristol,74-76 Avon Street,BS2 0PX</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Dancefloor</Tags>
+  </Event>
+  <Event>
+    <Event_name>The Blast - Andy C</Event_name>
+    <Date>2024-07-27</Date>
+    <Location>Motion Bristol,74-76 Avon Street,BS2 0PX</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Jump Up</Tags>
+  </Event>
+  <Event>
+    <Event_name>The Blast - Wilkinson</Event_name>
+    <Date>2024-08-03</Date>
+    <Location>Motion Bristol,74-76 Avon Street,BS2 0PX</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Jump Up</Tags>
+  </Event>
+  <Event>
+    <Event_name>The Blast - Hybrid Minds</Event_name>
+    <Date>2024-08-10</Date>
+    <Location>Motion Bristol,74-76 Avon Street,BS2 0PX</Location>
+    <Tickets>0/500</Tickets>
+    <Tags>DnB,Dancefloor,Liquid</Tags>
+  </Event>
+</events>

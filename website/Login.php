@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="styles2.css">
     
 </head>
@@ -18,7 +20,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link nav-text"  aria-current="page" href="index.html">Home</a>
+                <a class="nav-link nav-text"  aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link nav-text"  href="#">Tickets</a>
@@ -43,24 +45,19 @@
             <div class="row justify-content-center">
                 <div class="col-sm-4 col-lg-4"></div>
                 <div class="col-sm-4 col-lg-4 form-box" id="form-box">
-                    <h1>Log In</h1>
-                    <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <h1>Log In swaggy</h1>
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="input-group">
                             <div class="input-field">
                                 <input type="text" placeholder="Name" name="userName">
                             </div>
-
-                            <div class="input-field">
-                                <input type="email" placeholder="Email" name="userEmail">
-                            </div>
-
                             <div class="input-field">
                                 <input type="password" placeholder="Password" name="password1">
                             </div>
                         </div>
-                        <button type="submit" value="submit">Login</button>
+                        <button type="submit" value="submit">Log In</button>
                     </form>
-                    <p>Don't have an account? Create one <a href="register.php">here</a></p>
+                    <p>Don't have an account? Register <a href="register.php">here</a></p>
                 </div>
                 <div class="col-sm-4 col-lg-4"></div>
             </div>
@@ -68,33 +65,39 @@
       </div>
 
     <?php 
-      
-      if ($_SERVER['REQUEST_METHOD'] == 'GET')
+      session_start();
+      if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-        $userName = $_GET['userName'];
-        $email = $_POST['userEmail'];
+        $userID = uniqid();
+        $userName = $_POST['userName'];
         $password1 = $_POST['password1'];
-        $password;
-        $header = ['User name', 'Email', 'Password'];
-        $file = fopen('usersDataBase.csv', 'r');
 
-        if($password1 == $password2){
-          $password = $password1;
-
-          $data = array($userName, $email, $password);
-
-          if($file === false)
-          {
-            die("Unable to open file");
-          }
-
-          fputcsv($file, $data, '|');
-
-          header("Location: " . $_SERVER['PHP_SELF']);
-
-        fclose($file);
+        if (empty($userName) || empty($password1)) {
+            echo "Username and password are required!";
+          } else {
+            $file = fopen('usersDataBase2.csv', 'r');
         
-        }  
+            if($file === false) {
+              die("Unable to open file");
+            }
+
+            $loggedIn = false;
+                while (($data = fgetcsv($file, 1000, "|")) !== FALSE) {
+                if ($data[0] == $userName && $data[2] == $password1) {
+                    $loggedIn = true;
+                    $_SESSION['userName'] = $data[0];
+                    header("Location: index.php");
+                    break;
+                }else{
+                    echo "Incorrect username or password";
+                
+                }
+                }
+                fclose($file);
+
+            }
+                    
+        
       }
     ?>
 

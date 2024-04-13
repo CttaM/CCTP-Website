@@ -18,7 +18,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link nav-text"  aria-current="page" href="index.html">Home</a>
+                <a class="nav-link nav-text"  aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link nav-text"  href="#">Tickets</a>
@@ -58,13 +58,12 @@
                                 <input type="password" placeholder="Password" name="password1">
                             </div>
                             <div class="input-field">
-                              <label for="password2">Please re-enter password</label>
-                                <input type="password" placeholder="Password" id="password2" name="password2">
+                                <input type="password" placeholder="Confirm Password" id="password2" name="password2">
                             </div>
                         </div>
                         <button type="submit" value="submit">Register</button>
                     </form>
-                    <p>Already have an account? Login in <a href="Login.php">here</a></p>
+                    <p>Already have an account? Login in <a href="login.php">here</a></p>
                 </div>
                 <div class="col-sm-4 col-lg-4"></div>
             </div>
@@ -75,31 +74,30 @@
       
       if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
+        $userID = uniqid();
         $userName = $_POST['userName'];
         $email = $_POST['userEmail'];
         $password1 = $_POST['password1'];
         $password2 = $_POST['password2'];
         $password;
-        $header = ['User name', 'Email', 'Password'];
-        $file = fopen('usersDataBase.csv', 'a');
+        //$header = ['User name', 'Email', 'Password'];
+        //$file = fopen('usersDataBase.csv', 'a');
+       
 
         if($password1 == $password2){
           $password = $password1;
 
-          $data = array($userName, $email, $password);
+          $data = array($userName, $email, $password, $userID);
 
-          if($file === false)
-          {
-            die("Unable to open file");
-          }
+          $file = fopen('usersDataBase2.csv', 'a');
 
           fputcsv($file, $data, '|');
+          
 
           header("Location: " . $_SERVER['PHP_SELF']);
-
-        fclose($file);
-        
-        }  
+        } 
+         fclose($file);
+         echo "Registration Successful";
       }
     ?>
 

@@ -1,3 +1,9 @@
+<?php
+session_start(); 
+$loggedIn = isset($_SESSION['userName']); 
+?>
+<!DOCTYPE html>
+<html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +34,12 @@
                 <a class="nav-link nav-text" href="reps.html">Reps</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-text" href="Login.php">Log In</a>
+                <?php if (!$loggedIn): ?>
+                  <a class="nav-link nav-text" href="login.php">Log In</a>
+                <?php endif; ?>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-text" href="logout.php">Log Out</a>
               </li>
             </ul>
             <form class="d-flex" role="search">
@@ -39,71 +50,29 @@
         </div>
       </nav>
 
-      <div class="container">
+      <div class="container" id="welcome-text">
         <div class="row justify-content-center">
-          <div class="col col-md-3 col-lg-3 pt-5">
-          <h1 class="justify-content-center">For You</h1>
+          <div class="col col-md-4 col-lg-4"></div>
+          <div class="col col-md-4 col-lg-4 pt-5 text-center">
+              <?php if ($loggedIn): ?>
+                <h2>Welcome, <?php echo $_SESSION['userName']; ?></h2>
+              <?php endif; ?>
           </div>
-          <div class="col col-md-3 col-lg-3">
-          </div>
+          <div class="col col-md-4 col-lg-4"></div>
         </div>
-        
-        <div class="row px-5 py-5 justify-content-center">         
-            <div class ="col col-md-3 col-lg-3 event-thumbnail">
-                <h2><a href="event detail page 1.html" class="event-name">Event 1</a></h2>
-                <a href="event detail page 1.html"><img id="k-motionz-pic" src="Pics/k motionz.jpeg" class="img-fluid event-pic" alt="K motionz"></a>
-                <p>Motion</p>
-            </div>
-            <div class ="col col-md-3 col-lg-3 event-thumbnail">
-                <h2>Event 2</h2>
-                <img src="Pics/house music pic.jpg" class="img-fluid" alt="house music">
-                <p>Lakota</p>
-            </div>
-        </div>
-        <div class="row px-5 pb-5 justify-content-center">
-            <div class ="col col-md-3 col-lg-3 event-thumbnail">
-                <h2>Event 3</h2>
-                <img src="Pics/dnb pic 1.jpg" class="img-fluid" alt="drum and bass picture">
-                <p>Central Warehouse</p>
-            </div>
-            <div class ="col col-md-3 col-lg-3 event-thumbnail">
-                <h2>Event 4</h2>
-                <img src="Pics/SubFocus-Evolve-1-scaled.jpg" class="img-fluid" alt="sub focus evolve">
-                <p>Motion</p>
-            </div>
-        </div>
-        <div class="row px-5 pb-5 justify-content-center">
-            <div class ="col col-md-3 col-lg-3 event-thumbnail">
-                <h2>Event 5</h2>
-                <img src="Pics/dnb pic 1.jpg" class="img-fluid" alt="drum and bass picture">
-            </div>
-            <div class ="col col-md-3 event-thumbnail">
-                <h2>Event 6</h2>
-                <img src="Pics/SubFocus-Evolve-1-scaled.jpg" class="img-fluid" alt="sub focus evolve">
-            </div>
-        </div>
-        <div class="row px-5 pb-5 justify-content-center">
-          <div class ="col col-md-3 col-lg-3 event-thumbnail">
-              <h2>Event 5</h2>
-              <img src="Pics/dnb pic 1.jpg" class="img-fluid" alt="drum and bass picture">
-          </div>
-          <div class ="col col-md-3 event-thumbnail">
-              <h2>Event 6</h2>
-              <img src="Pics/SubFocus-Evolve-1-scaled.jpg" class="img-fluid" alt="sub focus evolve">
-          </div>
       </div>
-      <div class="row px-5 pb-5 justify-content-center">
-        <div class ="col col-md-3 col-lg-3 event-thumbnail">
-            <h2>Event 5</h2>
-            <img src="Pics/dnb pic 1.jpg" class="img-fluid" alt="drum and bass picture">
-        </div>
-        <div class ="col col-md-3 event-thumbnail">
-            <h2>Event 6</h2>
-            <img src="Pics/SubFocus-Evolve-1-scaled.jpg" class="img-fluid" alt="sub focus evolve">
-        </div>
-    </div>
+          <p>Check out the latest below:</p>
+
+          
+       
+
+      <div class="container">
+          <div class="row" id="event_row">
+              
+          </div>
       </div>
 
+      <!--  
       <div class="container-fluid px-0">
 
         <footer class="fixed-bottom text-center text-lg-start" style="background-color: #4C8787;">
@@ -122,18 +91,55 @@
             </button>
           </div>
       
-          <!-- Copyright -->
+           Copyright 
           <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             © 2020 Copyright:
             <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
           </div>
-          <!-- Copyright -->
-        </footer>
+           Copyright 
+        </footer>-->
         
       </div>
+      
+<script>
+  // Fetch the XML file
+fetch('events.xml')
+    .then(response => response.text())
+    .then(str => {
+        // Parse the XML string into a DOM tree
+        let parser = new DOMParser();
+        let xmlDoc = parser.parseFromString(str, "text/xml");
 
+        // Select the event elements
+        let events = xmlDoc.querySelectorAll('Event');
 
+        // Loop through the events
+        for (let i = 1; i < events.length; i++)  {
+            let event = events[i];
+            // Get the event details
+            let eventName = event.querySelector('Event_name').textContent;
+            let date = event.querySelector('Date').textContent;
+            let location = event.querySelector('Location').textContent;
+            let tickets = event.querySelector('Tickets').textContent;
+            let tags = event.querySelector('Tags').textContent;
 
+            // Create a div for the event
+            let div = document.createElement('div');
+            div.className = 'event-thumbnail col col-md-3 col-lg-3 ';
+            div.id = 'eventThumbnail';
+
+            // Add the event details to the div
+                div.innerHTML = `
+                <h2>${eventName}</h2>
+                <p>${date}</p>
+                <p>${tags}</p>
+            `;
+
+            // Add the div to the page
+            document.getElementById("event_row").appendChild(div);
+        };
+    });
+</script>
 
 
 <script src="scripts.js"></script>
