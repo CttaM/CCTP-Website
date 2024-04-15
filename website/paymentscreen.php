@@ -1,3 +1,8 @@
+<?php
+session_start(); 
+$loggedIn = isset($_SESSION['userName']); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +13,50 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="./styles2.css" />
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        let params = new URLSearchParams(location.search);
+        let eventName = params.get('event');
+        let eventPrice = params.get('price');
+
+        document.getElementById('eventName').textContent = eventName;
+        document.getElementById('eventPrice').textContent = eventPrice;
+
+        // Set the value of the hidden input field to the event name
+        document.getElementById('eventNameInput').value = eventName;
+    });
+    </script>
+<?php
+$eventName = isset($_GET['event']) ? $_GET['event'] : '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_SESSION['userName']; // Assuming the username is stored in the session
+    //$eventName = $_POST['eventName'];
+    $ticketQuantity = $_POST['ticketQuantity'];
+    // Open the tickets.csv file in append mode
+    $ticketFile = fopen("tickets.csv", "a");
+    if ($ticketFile !== FALSE) {
+      
+        // Create an array with the username, event name, and ticket quantity
+        $ticketData = array($username, $eventName, $ticketQuantity);
+
+        // Write the ticket data to the tickets.csv file
+        fputcsv($ticketFile, $ticketData);
+
+        // Close the tickets.csv file
+        fclose($ticketFile);
+
+    } else {
+        echo "Error: Unable to open tickets.csv";
+    }
+
+    $usersDatabase = fopen("usersDataBase2.csv", "a");
+    
+}
+?>
+
+
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -19,7 +68,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link nav-text"  aria-current="page" href="index.html">Home</a>
+                <a class="nav-link nav-text"  aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link nav-text"  href="#">Tickets</a>
@@ -41,35 +90,23 @@
       </nav>
 
     <div class="container">
+        <form method="post">
         <h1 class="pb-5 pt-3">Ticket purchase</h1>
-        <form method="post" action="formProcess.php">
+        <h2 class="pb-5 pt-3" id="eventName"></h2>
         <div class="row justify-content-center">
             <div class="col-sm-4 col-lg-4"></div>
-            
                 <div class="col-sm-4 col-lg-4">
-                    <div class="mb-3 justify-content-center">
-                        <p class="text-center">First Release Tckets: <strong>£10.00</strong></p>
+                    <div class="mb-5">
+                        <input type="hidden" name="eventName" id="eventNameInput" value="">
+                        <input type="hidden" name="userName" id="userNameInput" value="<?php echo $loggedIn; ?>">
+                        <!-- Rest of your form fields... -->
+                        <p class="">Ticket price: <strong>£10.00</strong></p>
                         <div class="justify-content-center">
-                        <label for="firstReleaseTickets" class="col-form-label">Quantity:</label>
-                        <input type="number" class="form-control text-center" name="firstReleaseTickets" id="firstReleaseTickets" min="0" style="width: 25%; display: inline">
+                        <label for="ticketQuantity" class="col-form-label">Quantity:</label>
+                        <input type="number" class="form-control text-center" name="ticketQuantity" id="ticketQuantity" min="0" style="width: 25%; display: inline">
                         <button onclick="addition()" class="justify-content-center" type="button" id="addButton" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
                         <button onclick="subtraction()" class="justify-content-center" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
                         </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <p class="text-center">Second Release Tickets: <strong>£12.50</strong></p>
-                        <label for="secondReleaseTickets" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" name="secondReleaseTickets" id="secondReleaseTickets" min="0" style="width: 25%; display: inline">
-                        <button onclick="addition2()" type="button" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
-                        <button onclick="subtraction2()" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
-                    </div>
-                    <div class="mb-3">
-                        <p class="text-center">Final Release Tickets: <strong>£15</strong></p>
-                        <label for="thirdReleaseTickets" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" name="thirdReleaseTickets" id="thirdReleaseTickets" min="0" style="width: 25%; display: inline">
-                        <button onclick="addition3()" type="button" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
-                        <button onclick="subtraction3()" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
                     </div>
                 </div>    
             <div class="col-sm-4 col-lg-4"></div>
@@ -98,6 +135,18 @@
     </div>
 
 
+
+<!-- <script>
+  let params = new URLSearchParams(location.search);
+  let eventName = params.get('event');
+  let eventPrice = params.get('price');
+
+  document.getElementById('eventName').textContent = eventName;
+  document.getElementById('eventPrice').textContent = eventPrice;
+
+  document.getElementById('eventNameInput').value = eventName;
+  console.log(document.getElementById('eventNameInput').value);
+</script> -->
 <script src="scripts.js"></script>
 <script src="https://kit.fontawesome.com/60d3c4e47b.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

@@ -92,12 +92,14 @@
           $file = fopen('usersDataBase2.csv', 'a');
 
           fputcsv($file, $data, '|');
-          
-
+          fclose($file);
+          echo "Registration Successful";
           header("Location: " . $_SERVER['PHP_SELF']);
-        } 
-         fclose($file);
-         echo "Registration Successful";
+        } else{
+          echo "Passwords do not match";
+        }
+         
+         
       }
     ?>
 

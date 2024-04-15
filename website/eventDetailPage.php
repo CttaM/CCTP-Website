@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+
+<?php
+$eventName = htmlspecialchars($_GET['event'] ?? '', ENT_QUOTES, 'UTF-8');
+$date = htmlspecialchars($_GET['date'] ?? '', ENT_QUOTES, 'UTF-8');
+$location = htmlspecialchars($_GET['location'] ?? '', ENT_QUOTES, 'UTF-8');
+$image = htmlspecialchars($_GET['image'] ?? '', ENT_QUOTES, 'UTF-8');
+// Retrieve more parameters as needed
+?>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid" style="background-color: #4C8787;">
           <a class="navbar-brand nav-title" href="#">Motive Mates</a>
@@ -39,7 +48,7 @@
       <div class="container">
         <div class="row py-5">
           <div class="col col-md-4 col-lg-4"></div>
-          <img src="Pics/k motionz.jpeg" alt="K Motionz" class="col col-md-4 col-lg-4">
+          <img src="Pics/<?php echo $image; ?>" alt="<?php echo $eventName; ?>" class="col col-md-4 col-lg-4">
           <div class="col col-md-4 col-lg-4"></div>
         </div>      
       </div>
@@ -47,11 +56,11 @@
       <div class="container">
         <div class="row py-3 justify-content-center">
           <div class="col col-md-3 col-lg-3">
-              <h1>K Motionz</h1> 
+            <h1 id="event-name"><?php echo $eventName; ?></h1> 
           </div>
           <div class="col col-md-3 col-lg-3">
-              <p class="py-0"><b>Friday 22nd March 2024</b><br>
-                Motion Bristol, 74-76 Avon Street BS2 0PX</p><br> 
+          <b><?php echo $date; ?></b><br>
+                <?php echo $location; ?> 
           </div>
         </div>
       </div>
@@ -63,7 +72,7 @@
           </div>
           <div class="col col-md-3 col-lg-3">
               <div id="Buy-Ticket-Button">
-                <button type="button" class="buy-ticket-button"><a href="paymentscreen.html" style="text-decoration: none; color: black;">Buy Tickets</a></button>
+                <button type="button" class="buy-ticket-button" onclick="loadPaymentScreen()">Buy Tickets</button>
               </div>
           </div>
         </div>
@@ -110,7 +119,6 @@
         </footer>
         
       </div>
-
 
 
 

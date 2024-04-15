@@ -63,6 +63,7 @@ footer{
 .event-thumbnail:hover{
     transform: scale(95%);
     transition: all ease 50ms;
+    
 }
 
 .event-thumbnail {
@@ -71,6 +72,7 @@ footer{
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #dbe7e7;
+    cursor: pointer;
 }
 
 .event-thumbnail h2 {

@@ -67,7 +67,7 @@ $loggedIn = isset($_SESSION['userName']);
        
 
       <div class="container">
-          <div class="row" id="event_row">
+          <div class="row justify-content-center" id="event_row">
               
           </div>
       </div>
@@ -125,8 +125,20 @@ fetch('events.xml')
 
             // Create a div for the event
             let div = document.createElement('div');
-            div.className = 'event-thumbnail col col-md-3 col-lg-3 ';
+            div.className = 'event-thumbnail col col-md-4 col-lg-4';
             div.id = 'eventThumbnail';
+
+            // Add an event listener to the div
+            div.addEventListener('click', function() {
+              let imageName = eventName.toLowerCase().replace(/ /g, '_') + '.jpg';
+              let url = 'eventDetailPage.php';
+              url += '?event=' + encodeURIComponent(eventName);
+              url += '&date=' + encodeURIComponent(date);
+              url += '&location=' + encodeURIComponent(location);
+              url += '&image=' + encodeURIComponent(imageName);
+              // Add more parameters as needed
+              window.location.href = url;
+            });
 
             // Add the event details to the div
                 div.innerHTML = `

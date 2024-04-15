@@ -19,11 +19,11 @@ function myFunction() {
 
 
 function addition(){
-  document.getElementById("firstReleaseTickets").stepUp();
+  document.getElementById("ticketQuantity").stepUp();
 }
 
 function subtraction(){
-  document.getElementById("firstReleaseTickets").stepDown();
+  document.getElementById("ticketQuantity").stepDown();
 }
 
 function addition2(){
@@ -49,13 +49,11 @@ function updateProgressBar(){
 }
   
 
+function loadPaymentScreen() {
+  let eventNameElement = document.getElementById('event-name');
+  let eventName = eventNameElement ? eventNameElement.textContent : 'Unknown Event';
+  let eventPrice = '12.50'; // Replace with the actual event price
+  let url = 'paymentscreen.php?event=' + encodeURIComponent(eventName) + '&price=' + encodeURIComponent(eventPrice);
+  window.location.href = url;
+}
 
-// function ticketSelectionPopUp(){
-//     var x = document.getElementById("ticket-selecetion");
-//     if (x.style.display === "none") {
-//       x.style.display = "block";
-//     } else {
-//       x.style.display = "none";
-//     }
-// }
- 
