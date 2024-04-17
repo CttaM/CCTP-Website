@@ -28,10 +28,10 @@ $loggedIn = isset($_SESSION['userName']);
                 <a class="nav-link nav-text" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-text" href="#">Tickets</a>
+                <a class="nav-link nav-text" href="ticketsPage.php">Tickets</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-text" href="reps.html">Reps</a>
+                <a class="nav-link nav-text" href="reps.php">Reps</a>
               </li>
               <li class="nav-item">
                 <?php if (!$loggedIn): ?>

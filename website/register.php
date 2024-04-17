@@ -92,9 +92,42 @@
           $file = fopen('usersDataBase2.csv', 'a');
 
           fputcsv($file, $data, '|');
+
           fclose($file);
+
+          $file = fopen('usersDataBase2.csv', 'r');
+          // Create a new instance of the SimpleXMLElement class
+          $xml = new SimpleXMLElement('<root/>');
+
+          // Loop through each line in the CSV file
+          while (($line = fgetcsv($file, 0, '|')) !== FALSE) {
+            if ($line === array(null) || $line === array('')) continue;
+
+              // Create a new child element in the XML data
+              $user = $xml->addChild('user');
+
+              // Set the text content of the child element to the data from the CSV file
+              $user->addChild('username', $line[0]);
+              $user->addChild('password', $line[1]);
+              $user->addChild('email', $line[2]);
+              $user->addChild('userID', $line[3]);
+          }
+
+          // Save the XML data to a file
+          $xml->asXML('users.xml');
+
+          // Close the CSV file
+          fclose($file);
+
+          $dom = new DOMDocument('1.0');
+          $dom->preserveWhiteSpace = false;
+          $dom->formatOutput = true;
+          $dom->loadXML($xml->asXML());
+          $dom->save('users.xml');
+
+
           echo "Registration Successful";
-          header("Location: " . $_SERVER['PHP_SELF']);
+          //header("Location: " . $_SERVER['PHP_SELF']);
         } else{
           echo "Passwords do not match";
         }

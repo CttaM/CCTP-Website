@@ -1,6 +1,7 @@
 <?php
 session_start(); 
 $loggedIn = isset($_SESSION['userName']); 
+$userID = isset($_SESSION['userID']);
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,6 @@ $loggedIn = isset($_SESSION['userName']);
 $eventName = isset($_GET['event']) ? $_GET['event'] : '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_SESSION['userName']; // Assuming the username is stored in the session
-    //$eventName = $_POST['eventName'];
     $ticketQuantity = $_POST['ticketQuantity'];
     // Open the tickets.csv file in append mode
     $ticketFile = fopen("tickets.csv", "a");
@@ -46,16 +46,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Close the tickets.csv file
         fclose($ticketFile);
 
+
+
+        $xml = simplexml_load_file('users.xml');
+        $userNode = $xml->xpath("//user[username='$username']")[0];
+
+        // If the user's node doesn't have a ticketsBought child, add one
+        if (!isset($userNode->ticketsBought)) {
+          $userNode->addChild('ticketsBought', $ticketQuantity);
+      } else {
+          // If the user's node does have a ticketsBought child, increment its value
+          $userNode->ticketsBought += $ticketQuantity;
+          $userNode->addchild('ticketTracker', $eventName . ', ' . $ticketQuantity);
+      }
+
+      // Save the XML file
+      $dom = new DOMDocument('1.0');
+      $dom->preserveWhiteSpace = false;
+      $dom->formatOutput = true;
+      $dom->loadXML($xml->asXML());
+      $dom->save('users.xml');
+
     } else {
         echo "Error: Unable to open tickets.csv";
-    }
-
-    $usersDatabase = fopen("usersDataBase2.csv", "a");
-    
+    }    
 }
 ?>
-
-
 
 </head>
 <body>
@@ -74,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="nav-link nav-text"  href="#">Tickets</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-text"  href="reps.html">Reps</a>
+                <a class="nav-link nav-text"  href="reps.php">Reps</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link nav-text" href="login.php">Log In</a>
@@ -99,6 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mb-5">
                         <input type="hidden" name="eventName" id="eventNameInput" value="">
                         <input type="hidden" name="userName" id="userNameInput" value="<?php echo $loggedIn; ?>">
+                        <!-- <input type="hidden" id="userID" name="userID" value="<?php $_SESSION['userID']; ?>"> -->
                         <!-- Rest of your form fields... -->
                         <p class="">Ticket price: <strong>£10.00</strong></p>
                         <div class="justify-content-center">

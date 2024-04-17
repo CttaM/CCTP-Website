@@ -1,3 +1,8 @@
+<?php
+session_start(); 
+$loggedIn = isset($_SESSION['userName']); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +41,18 @@
         </div>
       </nav>
 
+      <div class="container" id="welcome-text">
+        <div class="row justify-content-center">
+          <div class="col col-md-4 col-lg-4"></div>
+          <div class="col col-md-4 col-lg-4 pt-5 text-center">
+              <?php if ($loggedIn): ?>
+                <h2>Welcome, <?php echo $_SESSION['userName']; ?></h2>
+              <?php endif; ?>
+          </div>
+          <div class="col col-md-4 col-lg-4"></div>
+        </div>
+      </div>
+
 
 
       <div class="container">
@@ -48,8 +65,42 @@
 
       <div class="row">
         <div class="col col-md-4 col-lg-4"></div>        
-        <div class="col col-md-4 col-lg-4 progress m-3">         
-          <div class="progress-bar" role="progressbar" onload="updateProgressBar()" id="progressBar"  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="col col-md-4 col-lg-4 progress m-3">
+          <!-- Progress bar code here -->
+        <?php
+            // Load the XML file
+            $xml = simplexml_load_file('users.xml');
+
+            // Find the user's node
+            $userNode = $xml->xpath("//user[username='{$_SESSION['userName']}']")[0];
+
+            // Get the number of tickets bought by the user
+            $ticketsBought = isset($userNode->ticketsBought) ? (int)$userNode->ticketsBought : 0;
+
+            // Set the maximum value for the progress bar
+            $maxValue = 6; // Change this to your desired maximum value
+
+            if ($ticketsBought > $maxValue) {
+
+              // Generate a unique code
+              $uniqueCode = bin2hex(random_bytes(5)); // Change the number to adjust the length of the code
+
+              // Save the unique code to the user's node
+              $userNode->uniqueCode = $uniqueCode;
+
+              $ticketsBought = 0;
+              $userNode->ticketsBought = 0;
+              $dom = new DOMDocument('1.0');
+              $dom->preserveWhiteSpace = false;
+              $dom->formatOutput = true;
+              $dom->loadXML($xml->asXML());
+              $dom->save('users.xml');
+          }
+
+            // Calculate the percentage
+            $percentage = ($ticketsBought / $maxValue) * 100;
+        ?>         
+          <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php echo $percentage; ?>%;" id="progressBar" aria-valuenow="<?php echo $ticketsBought; ?>" aria-valuemin="0" aria-valuemax="<?php $maxValue; ?>"></div>
         </div>
         <div class="col col-md-4 col-lg-4"></div>
       </div> 
@@ -64,19 +115,21 @@
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Reputation Tracker
+                Your discounts
               </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 <Div class="row">
-                  <div class="col">
-                    <p class="text-center">+20%</p>
-                    <p class="text-center">+20%</p>
+                  <div class="col" id="discount-codes">
+                    <?php
+                      if (!empty($uniqueCode)) {
+                        echo "<p>Your discount code: $uniqueCode</p>";
+                    }
+                    ?>
                   </div>
                   <div class="col">
-                    <p class="text-start">1x Sleepless w/ Wilkinson</p>
-                    <p class="text-start">1x Wide Eyes Lakota</p>
+                    
                   </div>
                 </Div>
               </div>
@@ -91,7 +144,8 @@
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 <h3 class="px-2">Gain discounts on your favourite events and artists</h3>
-        <p class="pt-3 px-3">Each time you buy a ticket, you'll gain repuatation points. With enough reputation points you'll be able to get discounts including: for tickets, drinks and Uber's. Plus, you'll be able to share these with your friends, so everyone can join in the fun.</p>
+                <p class="pt-3 px-3">Each time you buy a ticket, you'll gain repuatation points. With enough reputation points you'll be able to get discounts including: for tickets, drinks and Uber's. Plus, you'll be able to share these with your friends, so everyone can join in the fun.</p>
+
               </div>
             </div>
           </div>
@@ -99,7 +153,7 @@
 
         
 
-          <footer class="fixed-bottom text-center text-lg-start" style="background-color: #4C8787;">
+          <!-- <footer class="fixed-bottom text-center text-lg-start" style="background-color: #4C8787;">
             <div class="container d-flex justify-content-center py-5">
               <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #54456b;">
                 <i class="fab fa-facebook-f"></i>
@@ -113,15 +167,15 @@
               <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #54456b;">
                 <i class="fab fa-twitter"></i>
               </button>
-            </div>
+            </div> -->
         
-            <!-- Copyright -->
+            <!-- Copyright
             <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
               © 2020 Copyright:
               <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
             </div>
-            <!-- Copyright -->
-          </footer>
+             Copyright -->
+          <!-- </footer>  -->
           
         
 

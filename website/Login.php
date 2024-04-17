@@ -68,7 +68,7 @@
       session_start();
       if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-        $userID = uniqid();
+        //$userID = uniqid();
         $userName = $_POST['userName'];
         $password1 = $_POST['password1'];
 

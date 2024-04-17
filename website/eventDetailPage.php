@@ -33,7 +33,7 @@ $image = htmlspecialchars($_GET['image'] ?? '', ENT_QUOTES, 'UTF-8');
                 <a class="nav-link nav-text"  href="#">Tickets</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-text"  href="reps.html">Reps</a>
+                <a class="nav-link nav-text"  href="reps.php">Reps</a>
               </li>
               
             </ul>
