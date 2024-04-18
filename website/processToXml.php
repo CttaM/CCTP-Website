@@ -27,6 +27,8 @@ while (($data = fgetcsv($handle, 1000, "|")) !== FALSE) {
     $student->appendChild($grade);
     $grade = $doc->createElement("Tags", $data[4]);
     $student->appendChild($grade);
+    $grade = $doc->createElement("Price", $data[5]);
+    $student->appendChild($grade);
     // Append the student element to the root
     $root->appendChild($student);
 }

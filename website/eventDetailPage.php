@@ -16,6 +16,17 @@ $date = htmlspecialchars($_GET['date'] ?? '', ENT_QUOTES, 'UTF-8');
 $location = htmlspecialchars($_GET['location'] ?? '', ENT_QUOTES, 'UTF-8');
 $image = htmlspecialchars($_GET['image'] ?? '', ENT_QUOTES, 'UTF-8');
 // Retrieve more parameters as needed
+// Load the XML file
+$eventsXml = simplexml_load_file('events.xml');
+
+// Find the event node that matches the event name
+$price = '';
+$eventNodes = $eventsXml->xpath("//event[eventName[starts-with(., '{$eventName}')]]");
+
+// If a matching event node is found, get the price
+if (count($eventNodes) > 0) {
+    $price = (string)$eventNodes[0]->Price;
+}
 ?>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -71,6 +82,8 @@ $image = htmlspecialchars($_GET['image'] ?? '', ENT_QUOTES, 'UTF-8');
 
           </div>
           <div class="col col-md-3 col-lg-3">
+              <p>
+                <?php echo $price ?></P>
               <div id="Buy-Ticket-Button">
                 <button type="button" class="buy-ticket-button" onclick="loadPaymentScreen()">Buy Tickets</button>
               </div>
