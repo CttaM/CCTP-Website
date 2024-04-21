@@ -1,6 +1,8 @@
 <?php
 session_start(); 
 $loggedIn = isset($_SESSION['userName']); 
+include 'tickets.php';
+include 'codes.php';
 ?>
 
 <!DOCTYPE html>
@@ -68,43 +70,23 @@ $loggedIn = isset($_SESSION['userName']);
         <div class="col col-md-4 col-lg-4 progress m-3">
           <!-- Progress bar code here -->
         <?php
-            // Load the XML file
-            $xml = simplexml_load_file('users.xml');
-
-            // Find the user's node
-            $userNode = $xml->xpath("//user[username='{$_SESSION['userName']}']")[0];
-
             // Get the number of tickets bought by the user
-            $ticketsBought = isset($userNode->ticketsBought) ? (int)$userNode->ticketsBought : 0;
+            $ticketsBought = getTicketCount($_SESSION['userName']);
 
-            // Set the maximum value for the progress bar
-            $maxValue = 6; // Change this to your desired maximum value
-
-            if ($ticketsBought > $maxValue) {
-
-              // Generate a unique code
-              $uniqueCode = bin2hex(random_bytes(5)); // Change the number to adjust the length of the code
-
-              // Save the unique code to the user's node
-              $userNode->uniqueCode = $uniqueCode;
-
-              $ticketsBought = 0;
-              $userNode->ticketsBought = 0;
-              $dom = new DOMDocument('1.0');
-              $dom->preserveWhiteSpace = false;
-              $dom->formatOutput = true;
-              $dom->loadXML($xml->asXML());
-              $dom->save('users.xml');
-          }
-
+            $rewards = getCodeCount($_SESSION['userName']);
+            $reputation = getReputation($_SESSION['userName'], $ticketsBought);
             // Calculate the percentage
-            $percentage = ($ticketsBought / $maxValue) * 100;
+            $percentage = ($reputation / getTicketsPerCode()) * 100;  
         ?>         
-          <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php echo $percentage; ?>%;" id="progressBar" aria-valuenow="<?php echo $ticketsBought; ?>" aria-valuemin="0" aria-valuemax="<?php $maxValue; ?>"></div>
-        </div>
-        <div class="col col-md-4 col-lg-4"></div>
+          <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php echo $percentage; ?>%;" ></div>
+          <!-- <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php //echo $percentage; ?>%;" aria-valuenow="<?php //echo $reputation; ?>" aria-valuemin="0" aria-valuemax="<?php //$maxValue; ?>"></div> -->
+        
+        
+        
       </div> 
-       
+      <h4 class="text-center">Total rewards: <?php echo getCodeCount($_SESSION['userName']); ?></h4>
+      <h4 class="text-center">Tickets bought: <?php echo $ticketsBought; ?></h4>
+      <h4 class="text-center">Next reward: <?php echo getTicketsPercode() - $reputation; ?></h4>
 
        
         <h1 class="px-3 pt-3">What is reps?</h1>

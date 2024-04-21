@@ -2,6 +2,8 @@
 session_start(); 
 $loggedIn = isset($_SESSION['userName']); 
 $userID = isset($_SESSION['userID']);
+include 'codes.php';
+include 'tickets.php';
 ?>
 
 <!DOCTYPE html>
@@ -33,44 +35,10 @@ $eventName = isset($_GET['event']) ? $_GET['event'] : '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_SESSION['userName']; // Assuming the username is stored in the session
     $ticketQuantity = $_POST['ticketQuantity'];
-    // Open the tickets.csv file in append mode
-    $ticketFile = fopen("tickets.csv", "a");
-    if ($ticketFile !== FALSE) {
-      
-        // Create an array with the username, event name, and ticket quantity
-        $ticketData = array($username, $eventName, $ticketQuantity);
-
-        // Write the ticket data to the tickets.csv file
-        fputcsv($ticketFile, $ticketData);
-
-        // Close the tickets.csv file
-        fclose($ticketFile);
-
-
-
-        $xml = simplexml_load_file('users.xml');
-        $userNode = $xml->xpath("//user[username='$username']")[0];
-
-        // If the user's node doesn't have a ticketsBought child, add one
-        if (!isset($userNode->ticketsBought)) {
-          $userNode->addChild('ticketsBought', $ticketQuantity);
-      } else {
-          // If the user's node does have a ticketsBought child, increment its value
-          $userNode->ticketsBought += $ticketQuantity;
-          $userNode->addchild('ticketTracker', $eventName . ', ' . $ticketQuantity);
-      }
-
-      // Save the XML file
-      $dom = new DOMDocument('1.0');
-      $dom->preserveWhiteSpace = false;
-      $dom->formatOutput = true;
-      $dom->loadXML($xml->asXML());
-      $dom->save('users.xml');
-
-    } else {
-        echo "Error: Unable to open tickets.csv";
-    }    
-}
+    addTicket($username, $eventName, $ticketQuantity);
+    addNewCode($username, getTicketCount($username));
+    
+  }
 ?>
 
 </head>

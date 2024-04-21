@@ -1,6 +1,7 @@
 <?php
 session_start(); 
 $loggedIn = isset($_SESSION['userName']); 
+include 'tickets.php';
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +30,7 @@ $loggedIn = isset($_SESSION['userName']);
                 <a class="nav-link nav-text" href="#">Tickets</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-text" href="#">Reps</a>
+                <a class="nav-link nav-text" href="reps.php">Reps</a>
               </li>
               
             </ul>
@@ -59,25 +60,21 @@ $loggedIn = isset($_SESSION['userName']);
           <div class="col col-md-4 col-lg-4"></div>
           <div class="col col-md-4 col-lg-4 pt-5 text-center" id="show-tickets">
           <?php
-             // Load the XML files
-              $usersXml = simplexml_load_file('users.xml');
-              $eventsXml = simplexml_load_file('events.xml');
-
-              // Find the user node that matches the logged-in username
-              $userNodes = $usersXml->xpath("//user[username='{$_SESSION['userName']}']");
-
-              // If a matching user node is found, loop through the 'event' children
-              if (count($userNodes) > 0) {
-                  foreach ($userNodes[0]->ticketTracker as $userEvent) {
-                      // Find the event node that matches the event name
-                      $eventNodes = $eventsXml->xpath("//event[eventName='{$userEvent->eventName}']");
-
-                      // If a matching event node is found, display the event name
-                      if (count($eventNodes) > 0) {
-                          echo "<p>{$eventNodes[0]->eventName}</p>";
-                      }
-                  }
-              }
+             $tickets = getTickets($_SESSION['userName']);
+             $count = getTicketCount($_SESSION['userName']);
+             echo "<h4>Your Tickets {$count}</h4>";
+             echo "<table>";
+             echo "<tr>";
+             echo "<th>Event Name</th>";
+             echo "<th>Quantity</th>";
+             echo "</tr>";
+             for ($i = 0; $i < count($tickets); $i++) {
+              echo "<tr>";
+                 echo "<td>{$tickets[$i][0]}</td>";
+                 echo "<td>{$tickets[$i][1]}</td>";
+              echo "</tr>";
+             }
+             echo "</table>";
           ?>
           </div>
           <div class="col col-md-4 col-lg-4"></div>
