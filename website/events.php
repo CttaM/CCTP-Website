@@ -3,18 +3,21 @@
     function getEventPrice($eventName)
     {
         $price = 0;
-        $file = fopen("events.csv", "r");
-        if ($file !== FALSE) {
-            while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
-                if($eventName == $data[0])
-                {
-                    $price = $data[1];
-                }   
-            }
-            fclose($file);
-        } else {
-            echo "Error: Unable to open events.csv";
+
+        // Load the XML file
+        $eventsXml = simplexml_load_file('events.xml');
+    
+        // Find the event node that matches the event name
+        $eventNodes = $eventsXml->xpath("//Event[Event_name[starts-with(., '{$eventName}')]]");
+    
+        // If a matching event node is found, get the price
+        if (count($eventNodes) > 0) {
+            $price = (string)$eventNodes[0]->Price;
+            
+        } else{
+            echo $eventNodes;;
         }
+    
         return $price;
     }
 

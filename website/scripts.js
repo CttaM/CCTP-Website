@@ -32,7 +32,8 @@ function subtraction(){
 function updateTotal(){
   let ticketQuantity = document.getElementById("ticketQuantity").value;
   let ticketPrice = document.getElementById("ticketPrice").innerHTML;
-  let total = ticketQuantity * ticketPrice;
+  let bookingFee = document.getElementById("bookingFee").innerHTML;
+  let total = ticketQuantity * ticketPrice + Number(bookingFee);
   document.getElementById("total").innerHTML ="Total: £" + total;
 }
 
@@ -46,8 +47,8 @@ function updateProgressBar(){
 function loadPaymentScreen() {
   let eventNameElement = document.getElementById('event-name');
   let eventName = eventNameElement ? eventNameElement.textContent : 'Unknown Event';
-  let eventPrice = '10.00'; // Replace with the actual event price
-  let url = 'paymentscreen.php?event=' + encodeURIComponent(eventName) + '&price=' + encodeURIComponent(eventPrice);
+  
+  let url = 'paymentscreen.php?event=' + encodeURIComponent(eventName);
   window.location.href = url;
 }
 

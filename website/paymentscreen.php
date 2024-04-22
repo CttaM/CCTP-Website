@@ -4,6 +4,8 @@ $loggedIn = isset($_SESSION['userName']);
 $userID = isset($_SESSION['userID']);
 include 'codes.php';
 include 'tickets.php';
+include 'events.php';
+$eventName = isset($_GET['event']) ? $_GET['event'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +25,7 @@ include 'tickets.php';
         let eventName = params.get('event');
         let eventPrice = params.get('price');
 
-        document.getElementById('eventName').textContent = eventName;
+        //document.getElementById('eventName').textContent = eventName;
         document.getElementById('eventPrice').textContent = eventPrice;
 
         // Set the value of the hidden input field to the event name
@@ -31,7 +33,7 @@ include 'tickets.php';
     });
     </script>
 <?php
-$eventName = isset($_GET['event']) ? $_GET['event'] : '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_SESSION['userName']; // Assuming the username is stored in the session
     $ticketQuantity = $_POST['ticketQuantity'];
@@ -76,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <form method="post">
         <h1 class="pb-5 pt-3">Ticket purchase</h1>
-        <h2 class="pb-5 pt-3" id="eventName"></h2>
+        <h2 class="pb-5 pt-3" id="eventName"> <?php echo $eventName; ?> </h2>
         <div class="row justify-content-center">
             <div class="col-sm-4 col-lg-4"></div>
                 <div class="col-sm-4 col-lg-4">
@@ -85,7 +87,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="userName" id="userNameInput" value="<?php echo $loggedIn; ?>">
                         <!-- <input type="hidden" id="userID" name="userID" value="<?php $_SESSION['userID']; ?>"> -->
                         <!-- Rest of your form fields... -->
-                        <p >Ticket price: £<strong><span id="ticketPrice">10.00</span></strong></p>
+                        <p>Event price: £<strong><span id="ticketPrice"><?php echo getEventPrice($eventName); ?></span></strong></p>
+                        <label>Booking fee: £
+                          <span id="bookingFee">
+                            <?php   
+                             if (getCodeCount($_SESSION['userName']) > 0){
+                              echo "0.00";
+                             } else{
+                              echo "1.00";
+                             }
+                            ?>
+                          </span>
+                        </label>
+                        
                         <div class="justify-content-center">
                         <label for="ticketQuantity" class="col-form-label">Quantity:</label>
                         <input type="number" class="form-control text-center" name="ticketQuantity" id="ticketQuantity" min="0" style="width: 25%; display: inline">
@@ -101,7 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="row">
                 <div class="col-sm-4 col-lg-4"></div>
                 <div class="col-sm-4 col-lg-4">
-                
                         <label for="NameOnCard">Name on card</label>
                         <input type="text" name="NameOnCard">
                         <label for="CardNumber">Card number</label>
@@ -112,6 +125,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="number" name="CardSecurityCode" placeholder="CVV" style="width: 75%; text-align: center;">
                         <label for="PostCode">Post code</label>
                         <input type="text" name="PostCode" style="width: 75%; text-align: center;"><br>
+                        <label for="userCode">Discount code</label>
+                        <input type="text" name="userCode" style="width: 75%; text-align: center;"><br>
                         
                         <button type="submit" value="Submit" id="completePurchaseButton">Complete payment</button>
                         </div>
