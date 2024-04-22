@@ -60,21 +60,26 @@ include 'tickets.php';
           <div class="col col-md-4 col-lg-4"></div>
           <div class="col col-md-4 col-lg-4 pt-5 text-center" id="show-tickets">
           <?php
-             $tickets = getTickets($_SESSION['userName']);
-             $count = getTicketCount($_SESSION['userName']);
-             echo "<h4>Your Tickets {$count}</h4>";
-             echo "<table>";
-             echo "<tr>";
-             echo "<th>Event Name</th>";
-             echo "<th>Quantity</th>";
-             echo "</tr>";
-             for ($i = 0; $i < count($tickets); $i++) {
+            if ($loggedIn) {
+              $tickets = getTickets($_SESSION['userName']);
+              $count = getTicketCount($_SESSION['userName']);
+              echo "<h4>Your Tickets {$count}</h4>";
+              echo "<table>";
               echo "<tr>";
-                 echo "<td>{$tickets[$i][0]}</td>";
-                 echo "<td>{$tickets[$i][1]}</td>";
+              echo "<th>Event Name</th>";
+              echo "<th>Quantity</th>";
               echo "</tr>";
-             }
-             echo "</table>";
+              for ($i = 0; $i < count($tickets); $i++) {
+                echo "<tr>";
+                echo "<td>{$tickets[$i][0]}</td>";
+                echo "<td>{$tickets[$i][1]}</td>";
+                echo "</tr>";  
+                }
+              echo "</table>"; 
+              }else {
+                echo "<h4>Please log in to see your tickets</h4>";
+              } 
+
           ?>
           </div>
           <div class="col col-md-4 col-lg-4"></div>

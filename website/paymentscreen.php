@@ -85,14 +85,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="userName" id="userNameInput" value="<?php echo $loggedIn; ?>">
                         <!-- <input type="hidden" id="userID" name="userID" value="<?php $_SESSION['userID']; ?>"> -->
                         <!-- Rest of your form fields... -->
-                        <p class="">Ticket price: <strong>£10.00</strong></p>
+                        <p >Ticket price: £<strong><span id="ticketPrice">10.00</span></strong></p>
                         <div class="justify-content-center">
                         <label for="ticketQuantity" class="col-form-label">Quantity:</label>
                         <input type="number" class="form-control text-center" name="ticketQuantity" id="ticketQuantity" min="0" style="width: 25%; display: inline">
                         <button onclick="addition()" class="justify-content-center" type="button" id="addButton" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
                         <button onclick="subtraction()" class="justify-content-center" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
-                        </div>
+                      </div>
                     </div>
+                    <p id="total"></p>
                 </div>    
             <div class="col-sm-4 col-lg-4"></div>
           </div>
@@ -111,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="number" name="CardSecurityCode" placeholder="CVV" style="width: 75%; text-align: center;">
                         <label for="PostCode">Post code</label>
                         <input type="text" name="PostCode" style="width: 75%; text-align: center;"><br>
+                        
                         <button type="submit" value="Submit" id="completePurchaseButton">Complete payment</button>
                         </div>
             

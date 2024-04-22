@@ -20,26 +20,20 @@ function myFunction() {
 
 function addition(){
   document.getElementById("ticketQuantity").stepUp();
+  updateTotal();
+
 }
 
 function subtraction(){
   document.getElementById("ticketQuantity").stepDown();
+  updateTotal();
 }
 
-function addition2(){
-  document.getElementById("secondReleaseTickets").stepUp();
-}
-
-function subtraction2(){
-  document.getElementById("secondReleaseTickets").stepDown();
-}
-
-function addition3(){
-  document.getElementById("thirdReleaseTickets").stepUp();
-}
-
-function subtraction3(){
-  document.getElementById("thirdReleaseTickets").stepDown();
+function updateTotal(){
+  let ticketQuantity = document.getElementById("ticketQuantity").value;
+  let ticketPrice = document.getElementById("ticketPrice").innerHTML;
+  let total = ticketQuantity * ticketPrice;
+  document.getElementById("total").innerHTML ="Total: £" + total;
 }
 
 function updateProgressBar(){
@@ -52,7 +46,7 @@ function updateProgressBar(){
 function loadPaymentScreen() {
   let eventNameElement = document.getElementById('event-name');
   let eventName = eventNameElement ? eventNameElement.textContent : 'Unknown Event';
-  let eventPrice = '12.50'; // Replace with the actual event price
+  let eventPrice = '10.00'; // Replace with the actual event price
   let url = 'paymentscreen.php?event=' + encodeURIComponent(eventName) + '&price=' + encodeURIComponent(eventPrice);
   window.location.href = url;
 }

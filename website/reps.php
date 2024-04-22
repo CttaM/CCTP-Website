@@ -70,29 +70,36 @@ include 'codes.php';
         <div class="col col-md-4 col-lg-4 progress m-3">
           <!-- Progress bar code here -->
         <?php
-            // Get the number of tickets bought by the user
-            $ticketsBought = getTicketCount($_SESSION['userName']);
+            if ($loggedIn)
+            {
+              // Get the number of tickets bought by the user
+              $ticketsBought = getTicketCount($_SESSION['userName']);
 
-            $rewards = getCodeCount($_SESSION['userName']);
-            $reputation = getReputation($_SESSION['userName'], $ticketsBought);
-            // Calculate the percentage
-            $percentage = ($reputation / getTicketsPerCode()) * 100;  
+              $rewards = getCodeCount($_SESSION['userName']);
+              $reputation = getReputation($_SESSION['userName'], $ticketsBought);
+              // Calculate the percentage
+              $percentage = ($reputation / getTicketsPerCode()) * 100; 
+            }  else {
+              $percentage = 0;
+              $rewards = 0;
+              $reputation = 0;
+              $ticketsBought = 0;
+            }
         ?>         
           <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php echo $percentage; ?>%;" ></div>
           <!-- <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php //echo $percentage; ?>%;" aria-valuenow="<?php //echo $reputation; ?>" aria-valuemin="0" aria-valuemax="<?php //$maxValue; ?>"></div> -->
         
         
         
-      </div> 
-      <h4 class="text-center">Total rewards: <?php echo getCodeCount($_SESSION['userName']); ?></h4>
+      </div>
+      <h4 class="text-center"><?php if(!$loggedIn){ echo "Please log in";} ?></h4>
+      <h4 class="text-center">Total rewards: <?php echo $rewards ?></h4>
       <h4 class="text-center">Tickets bought: <?php echo $ticketsBought; ?></h4>
       <h4 class="text-center">Next reward: <?php echo getTicketsPercode() - $reputation; ?></h4>
+      
 
        
         <h1 class="px-3 pt-3">What is reps?</h1>
-        
-        
-
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -102,17 +109,24 @@ include 'codes.php';
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <Div class="row">
-                  <div class="col" id="discount-codes">
+                <Div class="row justify-content-center">
+                  <div class="col text-center" id="discount-codes">
                     <?php
-                      if (!empty($uniqueCode)) {
-                        echo "<p>Your discount code: $uniqueCode</p>";
+                      if ($loggedIn)
+                      {
+                        $codes = getCodes($_SESSION['userName']);
+                        echo "<h4>Your discount codes</h4>";
+                        
+                        for ($i = 0; $i < count($codes); $i++) {
+                          echo "<p>{$codes[$i]}</p>";
+                          }
+                         
+                      }else {
+                        echo "<h4>Please log in to see your discount codes</h4>";
                     }
                     ?>
                   </div>
-                  <div class="col">
-                    
-                  </div>
+                  
                 </Div>
               </div>
             </div>
