@@ -171,7 +171,7 @@ fetch('events.xml')
 
             // Add an event listener to the div
             div.addEventListener('click', function() {
-              let imageName = eventName.toLowerCase().replace(/ /g, '_') + '.jpg';
+              let imageName = eventName.replace(/ /g, '_') + '.jpg';
               let url = 'eventDetailPage.php';
               url += '?event=' + encodeURIComponent(eventName);
               url += '&date=' + encodeURIComponent(date);
