@@ -89,8 +89,8 @@ include 'codes.php';
           <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php echo $percentage; ?>%;" ></div>
           <!-- <div class="progress-bar" role="progressbar" id="progressBar" style="width: <?php //echo $percentage; ?>%;" aria-valuenow="<?php //echo $reputation; ?>" aria-valuemin="0" aria-valuemax="<?php //$maxValue; ?>"></div> -->
         
-        
-        
+            </div>
+          <div class="col col-md-4 col-lg-4"></div> 
       </div>
       <h4 class="text-center"><?php if(!$loggedIn){ echo "Please log in";} ?></h4>
       <h4 class="text-center">Total rewards: <?php echo $rewards ?></h4>
