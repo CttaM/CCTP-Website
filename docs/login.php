@@ -67,7 +67,6 @@
       </div>
 
     <?php 
-      session_start();
       if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
         //$userID = uniqid();
@@ -85,15 +84,12 @@
 
             $loggedIn = false;
                 while (($data = fgetcsv($file, 1000, "|")) !== FALSE) {
-                if ($data[0] == $userName && $data[2] == $password1) {
-                    $loggedIn = true;
-                    $_SESSION['userName'] = $data[0];
-                    header("Location: index.php");
-                    break;
-                }else{
-                    echo "Incorrect username or password";
-                
-                }
+                  if ($data[0] == $userName && $data[2] == $password1) {
+                      $loggedIn = true;
+                      $_SESSION['userName'] = $data[0];
+                      header("Location: index.php");
+                      break;
+                  }
                 }
                 fclose($file);
 
