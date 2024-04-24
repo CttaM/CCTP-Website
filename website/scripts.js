@@ -24,10 +24,12 @@ function addition(){
 
 }
 
-function subtraction(){
+function subtraction()
+{
   document.getElementById("ticketQuantity").stepDown();
   updateTotal();
 }
+
 
 function updateTotal(){
   let ticketQuantity = document.getElementById("ticketQuantity").value;

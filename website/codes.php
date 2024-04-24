@@ -21,7 +21,7 @@ function generateCode($length = 10)
             $file = fopen("codes.csv", "a");
             if ($file !== FALSE) {
                 
-                $codeData = array($userName, $code);
+                $codeData = array($userName, $code, "valid");
                 fputcsv($file, $codeData);
                 fclose($file);
             } else {
@@ -37,7 +37,7 @@ function generateCode($length = 10)
         $file = fopen("codes.csv", "r");
         if ($file !== FALSE) {
             while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
-                if($userName == $data[0])
+                if($userName == $data[0] && $data[2] == "valid")
                 {
                     array_push($codes, $data[1]);
                 }   
@@ -77,6 +77,46 @@ function generateCode($length = 10)
     function getTicketsPerCode()
     {
         return 6.0;
+    }
+
+    function getNextCode($userName)
+    {
+        $code = "";
+        $file = fopen("codes.csv", "r");
+        if ($file !== FALSE) {
+            while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+                if($userName == $data[0] && $data[2] == "valid")
+                {
+                    $code = $data[1];
+                    break;
+                }   
+            }
+            fclose($file);
+        } else {
+            echo "Error: Unable to open codes.csv";
+        }
+        return $code;
+    }
+
+    function removeCode($code)
+    {
+        $file = fopen("codes.csv", "r");
+        $tempFile = fopen("temp.csv", "w");
+        if ($file !== FALSE && $tempFile !== FALSE) {
+            while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+                if($code == $data[1])
+                {
+                    $data[2] = "used";
+                } 
+                fputcsv($tempFile, $data);
+            }
+            fclose($file);
+            fclose($tempFile);
+            unlink("codes.csv");
+            rename("temp.csv", "codes.csv");
+        } else {
+            echo "Error: Unable to open codes.csv";
+        }
     }
 
 ?> 

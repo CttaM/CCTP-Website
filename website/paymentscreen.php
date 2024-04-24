@@ -35,11 +35,14 @@ $eventName = isset($_GET['event']) ? $_GET['event'] : '';
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_SESSION['userName']; // Assuming the username is stored in the session
-    $ticketQuantity = $_POST['ticketQuantity'];
-    addTicket($username, $eventName, $ticketQuantity);
-    addNewCode($username, getTicketCount($username));
-    
+  if ($loggedIn)
+    {
+      $username = $_SESSION['userName']; // Assuming the username is stored in the session
+      $ticketQuantity = $_POST['ticketQuantity'];
+      addTicket($username, $eventName, $ticketQuantity);
+      addNewCode($username, getTicketCount($username));
+      removeCode($_POST['repCodeInput']);
+    }
   }
 ?>
 
@@ -85,25 +88,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mb-5">
                         <input type="hidden" name="eventName" id="eventNameInput" value="">
                         <input type="hidden" name="userName" id="userNameInput" value="<?php echo $loggedIn; ?>">
+                        <input type="hidden" name="repCodeInput" id="repCodeInput" value="<?php if($loggedIn) {echo getNextCode($_SESSION['userName']);} else{echo "";} ?>">
                         <!-- <input type="hidden" id="userID" name="userID" value="<?php $_SESSION['userID']; ?>"> -->
                         <!-- Rest of your form fields... -->
                         <p>Event price: £<strong><span id="ticketPrice"><?php echo getEventPrice($eventName); ?></span></strong></p>
                         <label>Booking fee: £
                           <span id="bookingFee">
                             <?php   
-                             if (getCodeCount($_SESSION['userName']) > 0){
+                             if ($loggedIn && getNextCode($_SESSION['userName']) != ""){
                               echo "0.00";
                              } else{
                               echo "1.00";
                              }
                             ?>
                           </span>
+                          <?php
+                            if ($loggedIn && getNextCode($_SESSION['userName']) != ""){
+                              echo "<p style=\"font-size: 12px\">".getNextCode($_SESSION['userName'])." - Reputation code applied</p>";
+                            }
+                          ?>
                         </label>
                         
                         <div class="justify-content-center">
                         <label for="ticketQuantity" class="col-form-label">Quantity:</label>
-                        <input type="number" class="form-control text-center" name="ticketQuantity" id="ticketQuantity" min="0" style="width: 25%; display: inline">
-                        <button onclick="addition()" class="justify-content-center" type="button" id="addButton" style="display: inline;"><i class="fa-solid fa-plus"></i></button>
+                        <input type="number" class="form-control text-center" name="ticketQuantity" id="ticketQuantity" min="1" value="1" style="width: 25%; display: inline">
+                        <button onclick="addition()" class="justify-content-center" type="button" id="addButton"  style="display: inline;"><i class="fa-solid fa-plus"></i></button>
                         <button onclick="subtraction()" class="justify-content-center" type="button" style="display: inline;"><i class="fa-solid fa-minus"></i></button>
                       </div>
                     </div>

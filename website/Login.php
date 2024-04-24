@@ -45,7 +45,7 @@
             <div class="row justify-content-center">
                 <div class="col-sm-4 col-lg-4"></div>
                 <div class="col-sm-4 col-lg-4 form-box" id="form-box">
-                    <h1>Log In swaggy</h1>
+                    <h1>Please Log In</h1>
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="input-group">
                             <div class="input-field">
