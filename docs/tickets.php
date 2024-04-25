@@ -2,12 +2,17 @@
     
     function getTickets($userName)
     {
+        //initialize array to store tickets
         $tickets = array();
+        //open tickets.csv
         $file = fopen("tickets.csv", "r");
         if ($file !== FALSE) {
+            //read file line by line
             while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+                //check if ticket belongs to user
                 if($userName == $data[0])
                 {
+                    //add ticket to array
                     array_push($tickets, array($data[1], $data[2]));
                 }   
             }
@@ -15,18 +20,24 @@
         } else {
             echo "Error: Unable to open tickets.csv";
         }
+        //return array of tickets
         return $tickets;
     }
 
 
     function getTicketCount($userName)
     {
+        //initialize count
         $count = 0;
+        //open tickets.csv
         $file = fopen("tickets.csv", "r");
         if ($file !== FALSE) {
+            //read file line by line
             while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+                //check if ticket belongs to user
                 if($userName == $data[0])
                 {
+                    //increment count
                     $count+=$data[2];
                 }   
             }
@@ -34,14 +45,16 @@
         } else {
             echo "Error: Unable to open tickets.csv";
         }
+        //return count
         return $count;
     }
 
     function addTicket($userName, $eventName, $ticketQuantity)
     {
-
+        //open tickets.csv
         $file = fopen("tickets.csv", "a");
         if ($file !== FALSE) {
+            //write ticket data to file
             $ticketData = array($userName, $eventName, $ticketQuantity);
             fputcsv($file, $ticketData);
             fclose($file);

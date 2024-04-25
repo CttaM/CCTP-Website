@@ -69,22 +69,24 @@
     <?php 
       if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-        //$userID = uniqid();
+        // Get the username and password from the form
         $userName = $_POST['userName'];
         $password1 = $_POST['password1'];
-
+        // Check if the username and password are empty
         if (empty($userName) || empty($password1)) {
             echo "Username and password are required!";
           } else {
+            // Open the users database file
             $file = fopen('usersDataBase2.csv', 'r');
         
             if($file === false) {
               die("Unable to open file");
             }
-
+            // Check if the username and password match the records in the file
             $loggedIn = false;
                 while (($data = fgetcsv($file, 1000, "|")) !== FALSE) {
                   if ($data[0] == $userName && $data[2] == $password1) {
+                      // Set the session variable and redirect to the index page
                       $loggedIn = true;
                       $_SESSION['userName'] = $data[0];
                       header("Location: index.php");

@@ -1,5 +1,6 @@
 <?php
 session_start(); 
+// Check if the user is logged in
 $loggedIn = isset($_SESSION['userName']); 
 ?>
 <!DOCTYPE html>
@@ -144,10 +145,13 @@ $loggedIn = isset($_SESSION['userName']);
 <script>
   // Fetch the XML file
 fetch('events.xml')
+    // Parse the response as text
     .then(response => response.text())
+    // Use the text data to create event thumbnails
     .then(str => {
         // Parse the XML string into a DOM tree
         let parser = new DOMParser();
+        // Parse the XML string into a DOM tree
         let xmlDoc = parser.parseFromString(str, "text/xml");
 
         // Select the event elements

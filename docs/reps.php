@@ -1,6 +1,8 @@
 <?php
 session_start(); 
-$loggedIn = isset($_SESSION['userName']); 
+// Check if the user is logged in
+$loggedIn = isset($_SESSION['userName']);
+// Include the PHP files 
 include 'tickets.php';
 include 'codes.php';
 ?>
@@ -68,18 +70,20 @@ include 'codes.php';
       <div class="row">
         <div class="col col-md-4 col-lg-4"></div>        
         <div class="col col-md-4 col-lg-4 progress m-3">
-          <!-- Progress bar code here -->
         <?php
+            // Check if user is logged in
             if ($loggedIn)
             {
               // Get the number of tickets bought by the user
               $ticketsBought = getTicketCount($_SESSION['userName']);
-
+              // Get the number of rewards the user has
               $rewards = getCodeCount($_SESSION['userName']);
+              // Get the reputation of the user
               $reputation = getReputation($_SESSION['userName'], $ticketsBought);
               // Calculate the percentage
               $percentage = ($reputation / getTicketsPerCode()) * 100; 
             }  else {
+              // Set the values to 0 if the user is not logged in
               $percentage = 0;
               $rewards = 0;
               $reputation = 0;

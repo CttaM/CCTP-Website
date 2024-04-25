@@ -2,6 +2,7 @@
 
     function getEventPrice($eventName)
     {
+        // Initialize the price to 0
         $price = 0;
 
         // Load the XML file
@@ -12,12 +13,13 @@
     
         // If a matching event node is found, get the price
         if (count($eventNodes) > 0) {
+            // Get the price
             $price = (string)$eventNodes[0]->Price;
             
         } else{
             echo $eventNodes;;
         }
-    
+        // Return the price
         return $price;
     }
 

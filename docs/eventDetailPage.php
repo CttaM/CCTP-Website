@@ -11,15 +11,14 @@
 <body>
 
 <?php
+// Retrieve the event name, date, location, and image from the query string
 $eventName = htmlspecialchars($_GET['event'] ?? '', ENT_QUOTES, 'UTF-8');
 $date = htmlspecialchars($_GET['date'] ?? '', ENT_QUOTES, 'UTF-8');
 $location = htmlspecialchars($_GET['location'] ?? '', ENT_QUOTES, 'UTF-8');
 $image = htmlspecialchars($_GET['image'] ?? '', ENT_QUOTES, 'UTF-8');
-// Retrieve more parameters as needed
-// Load the XML file
+// Load the events XML file
 $eventsXml = simplexml_load_file('events.xml');
-
-// Find the event node that matches the event name
+// Find the event node with the matching event name
 $price = '';
 $eventNodes = $eventsXml->xpath("//event[eventName[starts-with(., '{$eventName}')]]");
 

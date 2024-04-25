@@ -74,27 +74,26 @@
       
       if ($_SERVER['REQUEST_METHOD'] == 'POST')
       {
+        // Get the username and password from the form, and generate a unique user ID
         $userID = uniqid();
         $userName = $_POST['userName'];
         $email = $_POST['userEmail'];
         $password1 = $_POST['password1'];
         $password2 = $_POST['password2'];
-        $password;
-        //$header = ['User name', 'Email', 'Password'];
-        //$file = fopen('usersDataBase.csv', 'a');
-       
+        $password;       
 
+        // Check if the passwords match
         if($password1 == $password2){
           $password = $password1;
-
+          // Add the user to the database
           $data = array($userName, $email, $password, $userID);
-
+          // Open the CSV file
           $file = fopen('usersDataBase2.csv', 'a');
-
+          // Write the data to the CSV file
           fputcsv($file, $data, '|');
 
           fclose($file);
-
+          // Convert the CSV file to an XML file
           $file = fopen('usersDataBase2.csv', 'r');
           // Create a new instance of the SimpleXMLElement class
           $xml = new SimpleXMLElement('<root/>');
@@ -118,7 +117,7 @@
 
           // Close the CSV file
           fclose($file);
-
+          // Load the XML file
           $dom = new DOMDocument('1.0');
           $dom->preserveWhiteSpace = false;
           $dom->formatOutput = true;

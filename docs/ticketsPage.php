@@ -1,6 +1,8 @@
 <?php
 session_start(); 
+// Check if the user is logged in
 $loggedIn = isset($_SESSION['userName']); 
+// Include the PHP files
 include 'tickets.php';
 ?>
 
@@ -60,15 +62,19 @@ include 'tickets.php';
           <div class="col col-md-4 col-lg-4"></div>
           <div class="col col-md-4 col-lg-4 pt-5 text-center" id="show-tickets">
           <?php
+            // Check if the user is logged in
             if ($loggedIn) {
+              // Get the tickets for the user
               $tickets = getTickets($_SESSION['userName']);
               $count = getTicketCount($_SESSION['userName']);
+              // Display the tickets
               echo "<h4>Your Tickets {$count}</h4>";
               echo "<table>";
               echo "<tr>";
               echo "<th>Event Name</th>";
               echo "<th>Quantity</th>";
               echo "</tr>";
+              // Loop through the tickets
               for ($i = 0; $i < count($tickets); $i++) {
                 echo "<tr>";
                 echo "<td>{$tickets[$i][0]}</td>";

@@ -1,10 +1,13 @@
 <?php
 session_start(); 
+// Check if the user is logged in
 $loggedIn = isset($_SESSION['userName']); 
 $userID = isset($_SESSION['userID']);
+// Include the PHP files
 include 'codes.php';
 include 'tickets.php';
 include 'events.php';
+// Get the event name from the URL
 $eventName = isset($_GET['event']) ? $_GET['event'] : '';
 ?>
 
@@ -20,10 +23,12 @@ $eventName = isset($_GET['event']) ? $_GET['event'] : '';
     <link rel="stylesheet" href="./styles2.css" />
 
     <script>
+      // Function to add the quantity of tickets
     document.addEventListener('DOMContentLoaded', (event) => {
-        let params = new URLSearchParams(location.search);
-        let eventName = params.get('event');
-        let eventPrice = params.get('price');
+      
+      let params = new URLSearchParams(location.search);
+      let eventName = params.get('event');
+      let eventPrice = params.get('price');
 
         //document.getElementById('eventName').textContent = eventName;
         document.getElementById('eventPrice').textContent = eventPrice;
@@ -37,10 +42,15 @@ $eventName = isset($_GET['event']) ? $_GET['event'] : '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($loggedIn)
     {
-      $username = $_SESSION['userName']; // Assuming the username is stored in the session
+      // Get the user name from the session
+      $username = $_SESSION['userName'];
+      // Get the ticket quantity from the form
       $ticketQuantity = $_POST['ticketQuantity'];
+      // Add the tickets to the user
       addTicket($username, $eventName, $ticketQuantity);
+      // Add the reputation code to the user
       addNewCode($username, getTicketCount($username));
+      // Remove the reputation code from the user
       removeCode($_POST['repCodeInput']);
     }
   }
